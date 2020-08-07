@@ -1,0 +1,435 @@
+swagger: "2.0"
+info:
+    description: "This is user management Service which provides following functionality
+    version: "1.0.0"
+    title: "Swagger User Management"
+    termsOfService: ""
+    contact:
+        email: "xyz@gmail.com"
+    license:
+        name: "none"
+        url: "none"
+host: localhost:8085
+basepath: "/users"
+tags:
+- name: "User"
+  description: "users of the application"
+- name: "Group"
+  description: "Represents group of users"
+- name: "Role"
+  description: "Role of users"
+
+schemes:
+- "https"
+- "http"
+
+paths:
+  /:
+    GET:
+      tags:
+      - "links"
+      summary: "List top level links"
+      description: ""
+      operationId: "Root"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Success, returns top level links"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/links"
+
+  /users:
+    GET:
+      tags:
+      - "User"
+      summary: "Lists all users of the application"
+      description: ""
+      operationId: "listUsers"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Success, returns list of all users"
+          schema:
+            type: "array"
+            items:
+              $ref: "#definitions/User"
+
+
+    POST:
+      tags:
+        - "User"
+      summary: "Create new user"
+      description: ""
+      operationId: "createUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user"
+        in: "body"
+        description: "user object to create new user, needs to be specificed as json file"
+        schema:
+          $ref: "#definitions/User"
+      responses:
+        "200":
+          description: "Success, returns details of created user"
+          schema:
+            schema:
+              $ref: "#definitions/User"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+  /users/{userId}:
+    GET:
+      tags:
+      - "User"
+      summary: "Show specific user"
+      description: ""
+      operationId: "showUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "user Id of specific user"
+        type: "string"
+      responses:
+        "200":
+          description: "Success, returns details of specific user"
+          schema:
+            type: "array"
+            items:
+              $ref: "#definitions/User"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+    PUT:
+      tags:
+        - "User"
+      summary: "Update a user"
+      description: ""
+      operationId: "updateUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "userId of the user to be updated"
+        type: string
+      - name: "user"
+        in: "body"
+        description: "user object to create new user, needs to be specificed as json file"
+        schema:
+          $ref: "#definitions/User"
+      responses:
+        "200":
+          description: "Success, updated user details"
+          schema:
+            $ref: "#definitions/User"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+    DELETE:
+      tags:
+        - "User"
+      summary: "Delete a user"
+      description: ""
+      operationId: "deleteUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "User Id of the user which needs to be deleted"
+        type: "string"
+      responses:
+        "200":
+          description: "Success"
+          schema: "string"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+  /groups:
+    GET:
+	    tags:
+        - "Group"
+      summary: "Lists all groups of the application"
+      description: ""
+      operationId: "listGroups"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Success, returns list of all users"
+          schema:
+            type: "array"
+            items:
+              $ref: "#definitions/Group"
+
+    POST:
+      tags:
+        - "Group"
+      summary: "Create new group"
+      description: ""
+      operationId: "createGroup"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "group"
+        in: "body"
+        description: "group object to create new group, needs to be specificed as json file"
+        schema:
+          $ref: "#definitions/Group"
+      responses:
+        "200":
+          description: "Success, returns details of created group"
+          schema:
+            schema:
+              $ref: "#definitions/Group"
+
+  /groups/{groupId}:
+    GET:
+    tags:
+      - "User"
+      summary: "Show specific group"
+      description: ""
+      operationId: "showGroup"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "groupId"
+        in: "path"
+        description: "Id of specific group"
+        type: "string"
+      responses:
+        "200":
+          description: "Success, returns details of specific group"
+          schema:
+            type: "array"
+            items:
+              $ref: "#definitions/Group"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+    PUT:
+      tags:
+        - "Group"
+      summary: "Update a group"
+      description: ""
+      operationId: "updateGroup"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "groupId"
+        in: "path"
+        description: "Id of the group to be updated"
+        type: string
+      - name: "group"
+        in: "body"
+        description: "group object to create new group, needs to be specificed as json file"
+        schema:
+          $ref: "#definitions/Group"
+      responses:
+        "200":
+          description: "Success, updated group details"
+          schema:
+            $ref: "#definitions/User"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+    DELETE:
+      tags:
+        - "Group"
+      summary: "Delete a group"
+      description: ""
+      operationId: "deleteGroup"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "Id of the group which needs to be deleted"
+        type: "string"
+      responses:
+        "200":
+          description: "Success"
+          schema: "string"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+  /roles:
+    GET:
+	    tags:
+        - "Role"
+      summary: "Lists all roles of the application"
+      description: ""
+      operationId: "listRoles"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Success, returns list of all roles"
+          schema:
+            type: "array"
+            items:
+              $ref: "#definitions/Role"
+
+    POST:
+      tags:
+        - "Role"
+      summary: "Create new role"
+      description: ""
+      operationId: "createRole"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "role"
+        in: "body"
+        description: "role object to create new role, needs to be specificed as json file"
+        schema:
+          $ref: "#definitions/Role"
+      responses:
+        "200":
+          description: "Success, returns details of created role"
+          schema:
+            schema:
+              $ref: "#definitions/Role"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+
+  /roles/{roleId}:
+
+    GET:
+      tags:
+        - "Role"
+      summary: "Show specific role"
+      description: ""
+      operationId: "showRole"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "roleId"
+        in: "path"
+        description: "Id of specific role"
+        type: "string"
+      responses:
+        "200":
+          description: "Success, returns details of specific role"
+          schema:
+              $ref: "#definitions/Role"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+    
+
+    PUT:
+      tags:
+        - "Group"
+      summary: "Update a role"
+      description: ""
+      operationId: "updateRole"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "roleId"
+        in: "path"
+        description: "Id of the role to be updated"
+        type: string
+      - name: "role"
+        in: "body"
+        description: "role object to create new group, needs to be specificed as json file"
+        schema:
+          $ref: "#definitions/Role"
+      responses:
+        "200":
+          description: "Success, updated role details"
+          schema:
+            $ref: "#definitions/Role"
+
+        "400":
+          description: "Bad Request"
+          Schema: "string"
+
+      
+
+    DELETE:
+      tags:
+        - "Role"
+      summary: "Delete a role"
+      description: ""
+      operationId: "deleteRole"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "roleId"
+        in: "path"
+        description: "Id of the role which needs to be deleted"
+        type: "string"
+      responses:
+        "200":
+          description: "Success"
+          schema: "string"
+
+        "400":
+          description: "Bad Requiest"
+          Schema: "string"
+
+
+definitions:
+  User:
+    userId: string
+    userName: string
+    password: string
+    roles: []string
+    userDetails: details
+    userGroups: []string
+
+  Group:
+    groupId: string
+    groupName: string
+    users: []User
+
+  role:
+    roleId: string
+    roleName: string
+    permissions: []string
+  
